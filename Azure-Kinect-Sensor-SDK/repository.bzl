@@ -22,5 +22,6 @@ def azure_kinect_sensor_sdk():
         name='Azure-Kinect-Sensor-SDK',
         url='https://github.com/microsoft/Azure-Kinect-Sensor-SDK/archive/refs/tags/v1.4.1.tar.gz',
         sha256='73106554449c64aff6b068078f0eada50c4474e99945b5ceb6ea4aab9a68457f',
-        build_file='@rules_azure_kinect//Azure-Kinect-Sensor-SDK:package.BUILD.bazel'
+        build_file='@rules_azure_kinect//Azure-Kinect-Sensor-SDK:package.BUILD.bazel',
+        strip_prefix='Azure-Kinect-Sensor-SDK-1.4.1'
     )

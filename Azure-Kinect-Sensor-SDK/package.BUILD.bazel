@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Gonna use some cc_library stuff, etc
 
+load('@rules_azure_kinect//util:configure_file.bzl', 'configure_file')
 
 # extract this from the 18.04 debian package
 # cc_library('depthengine',
@@ -21,40 +21,56 @@
 #     srcs=[],
 #     headers=[]
 
+configure_file(
+  name='configure_k4aversion_h',
+  input_file='include/k4a/k4aversion.h.in',
+  output_file='include/k4a/k4aversion.h',
+  vars={
+    'K4A_VERSION_MAJOR': '1',
+    'K4A_VERSION_MINOR': '4',
+    'K4A_VERSION_PATCH': '1',
+    'K4A_VERSION_PRERELEASE': '',
+    'K4A_VERSION_BUILD_METADATA': 'rules_azure_kinect',
+    'K4A_VERSION_STR': '1.4.1'
+  }
+)
+
 cc_library(
     name='k4a',
     deps=[],
+    data=[':configure_k4aversion_h'],
     srcs=[
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/depth/depth.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/logging/logging.cpp',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/transformation/rgbz.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/calibration/calibration.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/transformation/transformation.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/capturesync/capturesync.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/depth_mcu/depth_mcu.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/queue/queue.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/transformation/mode_specific_calibration.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/rwlock/rwlock_linux.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/sdk/k4a.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/tewrapper/tewrapper.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/image/image.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/color/color.cpp',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/transformation/extrinsic_transformation.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/allocator/allocator.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/color/uvc_camerareader.cpp',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/math/math.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/usbcommand/usbcommand.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/imu/imu.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/dynlib/dynlib_linux.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/global/global.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/color_mcu/color_mcu.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/transformation/intrinsic_transformation.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/usbcommand/usbstreaming.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/deloader/deloader.cpp',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/dewrapper/dewrapper.c',
-      'Azure-Kinect-Sensor-SDK-1.4.1/src/sdk/dll_main.c'
+      'src/depth/depth.c',
+      'src/logging/logging.cpp',
+      'src/transformation/rgbz.c',
+      'src/calibration/calibration.c',
+      'src/transformation/transformation.c',
+      'src/capturesync/capturesync.c',
+      'src/depth_mcu/depth_mcu.c',
+      'src/queue/queue.c',
+      'src/transformation/mode_specific_calibration.c',
+      'src/rwlock/rwlock_linux.c',
+      'src/sdk/k4a.c',
+      'src/tewrapper/tewrapper.c',
+      'src/image/image.c',
+      'src/color/color.cpp',
+      'src/transformation/extrinsic_transformation.c',
+      'src/allocator/allocator.c',
+      'src/color/uvc_camerareader.cpp',
+      'src/math/math.c',
+      'src/usbcommand/usbcommand.c',
+      'src/imu/imu.c',
+      'src/dynlib/dynlib_linux.c',
+      'src/global/global.c',
+      'src/color_mcu/color_mcu.c',
+      'src/transformation/intrinsic_transformation.c',
+      'src/usbcommand/usbstreaming.c',
+      'src/deloader/deloader.cpp',
+      'src/dewrapper/dewrapper.c',
+      'src/sdk/dll_main.c'
     ],
-    hdrs=[],
+    includes=['include/'],
+    hdrs=glob(['include/**/*.h']),
     visibility = ["//visibility:public"]
 )
 
