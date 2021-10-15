@@ -13,9 +13,8 @@
 # limitations under the License.
 
 
-cc_library(
+cc_import(
     name='spdlog',
     hdrs=glob(['include/**']),
-    includes=['include/'],
     visibility = ["//visibility:public"]
 )
