@@ -17,7 +17,8 @@ cc_library(
     name='aziotsharedutil',
     deps=[
         '@azure-macro-utils-c//:azure_macro_utils_c',
-        '@azure-umock-c//:umock_c'
+        '@azure-umock-c//:umock_c',
+        '@cjson//:cjson'
     ],
     srcs=[
         'src/singlylinkedlist.c',

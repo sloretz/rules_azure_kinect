@@ -37,7 +37,9 @@ configure_file(
 
 cc_library(
     name='k4a',
-    deps=[],
+    deps=[
+      '@azure-c-shared-utility//:aziotsharedutil',
+    ],
     data=[':configure_k4aversion_h'],
     srcs=[
       'src/depth/depth.c',
@@ -70,7 +72,7 @@ cc_library(
       'src/sdk/dll_main.c'
     ],
     includes=['include/'],
-    hdrs=glob(['include/**/*.h']),
+    hdrs=glob(['include/**/*.h', 'src/**/*.h']),
     visibility = ["//visibility:public"]
 )
 
