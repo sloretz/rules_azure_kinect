@@ -44,6 +44,7 @@ cc_library(
       '@libusb//:libusb-1.0',
       '@libuvc//:libuvc',
       '@spdlog//:spdlog',
+      '@turbojpeg//:turbojpeg',
     ],
     data=[':configure_k4aversion_h'],
     srcs=[
