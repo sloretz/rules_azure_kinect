@@ -15,7 +15,7 @@
 load('@bazel_tools//tools/build_defs/repo:utils.bzl', 'maybe')
 
 def _spdlog_debian_impl(repository_ctx):
-    # Get from spdlog-1.0-0-dev
+    # Get from libspdlog-dev
     repository_ctx.symlink(
         '/usr/include/spdlog/',
         'include/spdlog/',
