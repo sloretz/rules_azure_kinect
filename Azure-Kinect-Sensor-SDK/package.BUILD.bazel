@@ -42,6 +42,7 @@ cc_library(
       '@azure-c-shared-utility//:aziotsharedutil',
       '@cjson//:cjson',
       '@libusb//:libusb-1.0',
+      '@libuvc//:libuvc',
       '@spdlog//:spdlog',
     ],
     data=[':configure_k4aversion_h'],
