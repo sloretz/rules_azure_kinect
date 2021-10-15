@@ -24,7 +24,7 @@ cc_library(
 cc_library(
     name='cjson_utils',
     deps=[':cjson'],
-    srcs=['cJSON_utils.c'],
-    hdrs=['cJSON_utils.h'],
+    srcs=['cJSON_Utils.c'],
+    hdrs=['cJSON_Utils.h'],
     visibility = ["//visibility:public"]
 )
