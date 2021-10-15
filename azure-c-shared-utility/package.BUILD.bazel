@@ -18,7 +18,6 @@ cc_library(
     deps=[
         '@azure-macro-utils-c//:azure_macro_utils_c',
         '@azure-umock-c//:umock_c',
-        '@cjson//:cjson'
     ],
     srcs=[
         'src/singlylinkedlist.c',

@@ -22,11 +22,11 @@ def libcjson_dev():
 
 
 def cjson():
-   maybe(
-       http_archive,
-       name='cjson',
-       url='https://github.com/DaveGamble/cJSON/archive/refs/tags/v1.7.8.tar.gz',
-       sha256='e2544bd48d98005b1d0f7dc8a02e1559f9d303b9d8120f130362a40b548bcfcd',
-       build_file='@rules_azure_kinect//cjson:package.BUILD.bazel',
-       strip_prefix='cJSON-1.7.8'
+    maybe(
+        http_archive,
+        name='cjson',
+        url='https://github.com/DaveGamble/cJSON/archive/refs/tags/v1.7.8.tar.gz',
+        sha256='e2544bd48d98005b1d0f7dc8a02e1559f9d303b9d8120f130362a40b548bcfcd',
+        build_file='@rules_azure_kinect//cjson:package.BUILD.bazel',
+        strip_prefix='cJSON-1.7.8'
     )

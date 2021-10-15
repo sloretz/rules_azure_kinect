@@ -39,6 +39,8 @@ cc_library(
     name='k4a',
     deps=[
       '@azure-c-shared-utility//:aziotsharedutil',
+      '@cjson//:cjson',
+      '@libusb//:libusb-1.0',
     ],
     data=[':configure_k4aversion_h'],
     srcs=[
