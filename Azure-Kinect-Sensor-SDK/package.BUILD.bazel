@@ -37,10 +37,12 @@ configure_file(
 
 cc_library(
     name='k4a',
+    copts=['-march=native'],
     deps=[
       '@azure-c-shared-utility//:aziotsharedutil',
       '@cjson//:cjson',
       '@libusb//:libusb-1.0',
+      '@spdlog//:spdlog',
     ],
     data=[':configure_k4aversion_h'],
     srcs=[
