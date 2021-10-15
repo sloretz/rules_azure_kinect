@@ -27,11 +27,11 @@ def _libusb_debian_impl(repository_ctx):
     )
 
     repository_ctx.symlink(
-        Label('@rules_azure_kinect//libusb:package.BUILD.bazel'),
+        Label('@rules_azure_kinect//libusb:package-debian.BUILD.bazel'),
         'BUILD'
     )
 
-_libusb_repository = repository_rule(
+_libusb_debian_repository = repository_rule(
     local = True,
     configure = True,
     implementation = _libusb_debian_impl,
@@ -39,6 +39,15 @@ _libusb_repository = repository_rule(
 
 def libusb_debian():
     maybe(
-        _libusb_repository,
+        _libusb_debian_repository,
         name='libusb'
     )
+
+
+
+def libusb():
+    pass
+    # maybe(
+    #     _libusb_repository,
+    #     name='libusb'
+    # )

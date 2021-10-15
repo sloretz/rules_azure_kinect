@@ -13,10 +13,17 @@
 # limitations under the License.
 
 
+cc_import(
+    name='libusb-1.0_private',
+    hdrs=glob(['include/**']),
+    shared_library='lib/libusb-1.0.so',
+)
+
+# Workaround https://github.com/bazelbuild/bazel/issues/4748
 cc_library(
-    name='libusb-1.0',
-    srcs=['lib/libusb-1.0.so'],
-    hdrs=['include/libusb.h'],
-    includes=['include/'],
-    visibility = ["//visibility:public"]
+  name='libusb-1.0',
+  hdrs=glob(['include/**']),
+  includes=['include/'],
+  deps = [":libusb-1.0_private"],
+  visibility = ["//visibility:public"],
 )
