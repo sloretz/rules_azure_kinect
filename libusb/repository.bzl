@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load('@bazel_tools//tools/build_defs/repo:http.bzl', 'http_archive')
 load('@bazel_tools//tools/build_defs/repo:utils.bzl', 'maybe')
 
 def _libusb_debian_impl(repository_ctx):
@@ -44,10 +45,13 @@ def libusb_debian():
     )
 
 
-
 def libusb():
-    pass
-    # maybe(
-    #     _libusb_repository,
-    #     name='libusb'
-    # )
+    # Use on older systems where libusb_set_option is not yet available
+    maybe(
+        http_archive,
+        name='libusb',
+        url='https://github.com/libusb/libusb/archive/refs/tags/v1.0.24.tar.gz',
+        sha256='b7724c272dfc5713dce88ff717efd60f021ca5b7c8e30f08ebb2c42d2eea08ae',
+        build_file='@rules_azure_kinect//libusb:package-source.BUILD.bazel',
+        strip_prefix='libusb-1.0.24'
+    )

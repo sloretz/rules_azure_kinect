@@ -14,27 +14,25 @@
 
 
 def _configure_file_impl(ctx):
-    # Declare file that will be written to
-    out = ctx.actions.declare_file(ctx.attr.output_file)
-
     # handle @ONLY, but not handling @@
     substitutions = {}
     for key, value in ctx.attr.vars.items():
         substitutions['@' + key + '@'] = str(value)
     ctx.actions.expand_template(
-        output = out,
-        template = ctx.file.input_file,
+        output = ctx.outputs.out,
+        template = ctx.file.template,
         substitutions = substitutions
     )
 
-    return [DefaultInfo(files = depset([out]))]
+    return [DefaultInfo(files = depset([ctx.outputs.out]))]
 
 
 configure_file = rule(
     implementation = _configure_file_impl,
+    output_to_genfiles = True,
     attrs = {
-        'input_file': attr.label(allow_single_file = True, mandatory=True),
-        'output_file': attr.string(mandatory=True),
+        'template': attr.label(allow_single_file = True, mandatory=True),
+        'out': attr.output(mandatory=True),
         'vars': attr.string_dict()
     },
 )

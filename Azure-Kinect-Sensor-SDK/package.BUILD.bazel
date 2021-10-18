@@ -23,8 +23,8 @@ load('@rules_azure_kinect//util:configure_file.bzl', 'configure_file')
 
 configure_file(
   name='configure_k4aversion_h',
-  input_file='include/k4a/k4aversion.h.in',
-  output_file='include/k4a/k4aversion.h',
+  template='include/k4a/k4aversion.h.in',
+  out='k4a/k4aversion.h',
   vars={
     'K4A_VERSION_MAJOR': '1',
     'K4A_VERSION_MINOR': '4',
@@ -33,6 +33,12 @@ configure_file(
     'K4A_VERSION_BUILD_METADATA': 'rules_azure_kinect',
     'K4A_VERSION_STR': '1.4.1'
   }
+)
+
+cc_library(
+    name='k4a_version_header',
+    hdrs=[':k4a/k4aversion.h'],
+    include_prefix='.'
 )
 
 cc_library(
@@ -45,6 +51,7 @@ cc_library(
       '@libuvc//:libuvc',
       '@spdlog//:spdlog',
       '@turbojpeg//:turbojpeg',
+      ':k4a_version_header',
     ],
     data=[':configure_k4aversion_h'],
     srcs=[
