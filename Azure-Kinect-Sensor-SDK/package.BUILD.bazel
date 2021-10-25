@@ -14,6 +14,7 @@
 
 
 load('@rules_azure_kinect//util:configure_file.bzl', 'configure_file')
+load('@rules_azure_kinect//util:generate_export_header.bzl', 'generate_export_header')
 
 # extract this from the 18.04 debian package
 # cc_library('depthengine',
@@ -37,7 +38,21 @@ configure_file(
 
 cc_library(
     name='k4a_version_header',
+    data=[':configure_k4aversion_h'],
     hdrs=[':k4a/k4aversion.h'],
+    include_prefix='.'
+)
+
+generate_export_header(
+    name='generate_k4a_export_h',
+    out='k4a/k4a_export.h',
+    library_name='k4a'
+)
+
+cc_library(
+    name='k4a_export_header',
+    data=[':generate_k4a_export_h'],
+    hdrs=[':k4a/k4a_export.h'],
     include_prefix='.'
 )
 
@@ -52,8 +67,8 @@ cc_library(
       '@spdlog//:spdlog',
       '@turbojpeg//:turbojpeg',
       ':k4a_version_header',
+      ':k4a_export_header',
     ],
-    data=[':configure_k4aversion_h'],
     srcs=[
       'src/depth/depth.c',
       'src/logging/logging.cpp',
