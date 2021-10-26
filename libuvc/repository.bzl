@@ -12,33 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load('@bazel_tools//tools/build_defs/repo:git.bzl', 'new_git_repository')
 load('@bazel_tools//tools/build_defs/repo:utils.bzl', 'maybe')
 
-def _libuvc_debian_impl(repository_ctx):
-    # Get from libuvc-dev
-    repository_ctx.symlink(
-        '/usr/include/libuvc/',
-        'include/libuvc/',
-    )
 
-    repository_ctx.symlink(
-        '/usr/lib/x86_64-linux-gnu/libuvc.so',
-        'lib/libuvc.so'
-    )
-
-    repository_ctx.symlink(
-        Label('@rules_azure_kinect//libuvc:package.BUILD.bazel'),
-        'BUILD'
-    )
-
-_libuvc_repository = repository_rule(
-    local = True,
-    configure = True,
-    implementation = _libuvc_debian_impl,
-)
-
-def libuvc_debian():
+def libuvc():
+    # libuvc hasn't had a new release in a while
     maybe(
-        _libuvc_repository,
-        name='libuvc'
+        new_git_repository,
+        name='libuvc',
+        commit='92621946160855f8154c35ca4f0299f5392f6c93',
+        remote='https://github.com/libuvc/libuvc.git',
+        build_file='@rules_azure_kinect//libuvc:package.BUILD.bazel',
     )

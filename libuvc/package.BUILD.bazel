@@ -12,17 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cc_import(
-    name='libuvc_private',
-    hdrs=glob(['include/**']),
-    shared_library='lib/libuvc.so',
-)
-
-# Workaround https://github.com/bazelbuild/bazel/issues/4748
 cc_library(
   name='libuvc',
+  deps=['@libusb//:libusb-1.0'],
   hdrs=glob(['include/**']),
+  srcs=[
+    'src/ctrl.c',
+    'src/ctrl-gen.c',
+    'src/device.c',
+    'src/diag.c',
+    'src/frame.c',
+    'src/init.c',
+    'src/stream.c',
+    'src/misc.c',
+    'src/frame-mjpeg.c',
+  ],
   includes=['include/'],
-  deps = [':libuvc_private'],
   visibility = ['//visibility:public'],
 )
