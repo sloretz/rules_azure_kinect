@@ -13,8 +13,16 @@
 # limitations under the License.
 
 cc_import(
-    name='libuvc',
+    name='libuvc_private',
     hdrs=glob(['include/**']),
     shared_library='lib/libuvc.so',
-    visibility = ["//visibility:public"]
+)
+
+# Workaround https://github.com/bazelbuild/bazel/issues/4748
+cc_library(
+  name='libuvc',
+  hdrs=glob(['include/**']),
+  includes=['include/'],
+  deps = [':libuvc_private'],
+  visibility = ['//visibility:public'],
 )

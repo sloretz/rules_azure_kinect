@@ -15,7 +15,7 @@
 load('@bazel_tools//tools/build_defs/repo:utils.bzl', 'maybe')
 
 def _libuvc_debian_impl(repository_ctx):
-    # Get from libuvc-1.0-0-dev
+    # Get from libuvc-dev
     repository_ctx.symlink(
         '/usr/include/libuvc/',
         'include/libuvc/',
