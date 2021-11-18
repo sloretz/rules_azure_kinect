@@ -1,0 +1,77 @@
+# Copyright 2021 Shane Loretz
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+cc_library(
+    name='aziotsharedutil',
+    deps=[
+        '@azure-macro-utils-c//:azure_macro_utils_c',
+        '@azure-umock-c//:umock_c',
+    ],
+    srcs=[
+        'src/singlylinkedlist.c',
+        'adapters/threadapi_pthreads.c',
+        'src/sha384-512.c',
+        'src/constbuffer_array.c',
+        'src/xlogging.c',
+        'src/constbuffer.c',
+        'src/azure_base64.c',
+        'src/constmap.c',
+        'src/xio.c',
+        'src/sha224.c',
+        'src/string_tokenizer.c',
+        'adapters/x509_openssl.c',
+        'src/buffer.c',
+        'src/gb_stdio.c',
+        'src/usha.c',
+        'src/hmacsha256.c',
+        'src/urlencode.c',
+        'adapters/socketio_berkeley.c',
+        'src/doublylinkedlist.c',
+        'src/hmac.c',
+        'src/vector.c',
+        'src/connection_string_parser.c',
+        'src/map.c',
+        'src/consolelogger.c',
+        'src/gb_rand.c',
+        'adapters/linux_time.c',
+        'src/constbuffer_array_batcher.c',
+        'src/azure_base32.c',
+        'src/gbnetwork.c',
+        'adapters/uniqueid_linux.c',
+        'src/memory_data.c',
+        'src/gballoc.c',
+        'src/dns_resolver_sync.c',
+        'adapters/platform_linux.c',
+        'src/http_proxy_io.c',
+        'adapters/tlsio_openssl.c',
+        'src/sastoken.c',
+        'src/crt_abstractions.c',
+        'adapters/agenttime.c',
+        'adapters/condition_pthreads.c',
+        'src/string_token.c',
+        'adapters/lock_pthreads.c',
+        'adapters/envvariable.c',
+        'src/sha1.c',
+        'src/strings.c',
+        'adapters/tickcounter_linux.c',
+        'src/gb_time.c',
+        'src/uuid.c',
+        'src/optionhandler.c',
+    ],
+    hdrs=glob(['inc/**/*.h', 'adapters/*.h', 'pal/linux/*.h']),
+    includes=['inc/', 'pal/linux/'],
+    visibility = ["//visibility:public"]
+)
+

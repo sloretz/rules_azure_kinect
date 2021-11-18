@@ -1,0 +1,116 @@
+# Copyright 2021 Shane Loretz
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+load('@rules_azure_kinect//util:configure_file.bzl', 'configure_file')
+load('@rules_azure_kinect//util:generate_export_header.bzl', 'generate_export_header')
+
+# extract this from the 18.04 debian package
+# cc_library('depthengine',
+#     deps=['k4a']
+#     srcs=[],
+#     headers=[]
+
+configure_file(
+  name='configure_k4aversion_h',
+  template='include/k4a/k4aversion.h.in',
+  out='k4a/k4aversion.h',
+  vars={
+    'K4A_VERSION_MAJOR': '1',
+    'K4A_VERSION_MINOR': '4',
+    'K4A_VERSION_PATCH': '1',
+    'K4A_VERSION_PRERELEASE': '',
+    'K4A_VERSION_BUILD_METADATA': 'rules_azure_kinect',
+    'K4A_VERSION_STR': '1.4.1'
+  }
+)
+
+cc_library(
+    name='k4a_version_header',
+    data=[':configure_k4aversion_h'],
+    hdrs=[':k4a/k4aversion.h'],
+    include_prefix='.'
+)
+
+generate_export_header(
+    name='generate_k4a_export_h',
+    out='k4a/k4a_export.h',
+    library_name='k4a'
+)
+
+cc_library(
+    name='k4a_export_header',
+    data=[':generate_k4a_export_h'],
+    hdrs=[':k4a/k4a_export.h'],
+    include_prefix='.'
+)
+
+cc_library(
+    name='k4a',
+    copts=['-march=native'],
+    deps=[
+      '@azure-c-shared-utility//:aziotsharedutil',
+      '@cjson//:cjson',
+      '@libusb//:libusb-1.0',
+      '@libuvc//:libuvc',
+      '@spdlog//:spdlog',
+      '@turbojpeg//:turbojpeg',
+      ':k4a_version_header',
+      ':k4a_export_header',
+    ],
+    srcs=[
+      'src/depth/depth.c',
+      'src/logging/logging.cpp',
+      'src/transformation/rgbz.c',
+      'src/calibration/calibration.c',
+      'src/transformation/transformation.c',
+      'src/capturesync/capturesync.c',
+      'src/depth_mcu/depth_mcu.c',
+      'src/queue/queue.c',
+      'src/transformation/mode_specific_calibration.c',
+      'src/rwlock/rwlock_linux.c',
+      'src/sdk/k4a.c',
+      'src/tewrapper/tewrapper.c',
+      'src/image/image.c',
+      'src/color/color.cpp',
+      'src/transformation/extrinsic_transformation.c',
+      'src/allocator/allocator.c',
+      'src/color/uvc_camerareader.cpp',
+      'src/math/math.c',
+      'src/usbcommand/usbcommand.c',
+      'src/imu/imu.c',
+      'src/dynlib/dynlib_linux.c',
+      'src/global/global.c',
+      'src/color_mcu/color_mcu.c',
+      'src/transformation/intrinsic_transformation.c',
+      'src/usbcommand/usbstreaming.c',
+      'src/deloader/deloader.cpp',
+      'src/dewrapper/dewrapper.c',
+      'src/sdk/dll_main.c'
+    ],
+    includes=['include/'],
+    hdrs=glob(['include/**/*.h', 'src/**/*.h']),
+    visibility = ["//visibility:public"]
+)
+
+# cc_library('k4arecord',
+#     deps=['k4a']
+#     srcs=[],
+#     headers=[]
+
+# cc_binary('AzureKinectFirmwareTool'
+# 
+# cc_binary('k4arecorder'
+# 
+# cc_binary('k4aviewer'
